@@ -416,4 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+
+
+# Node.js dependencies
 *node_modules/
