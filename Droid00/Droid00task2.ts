@@ -13,12 +13,12 @@ export namespace Droid {
         console.log(_state)
         switchDirection = !switchDirection
         if (switchDirection == true) {
-
+            
             return { module: "Chassis", method: "move", data: "forward" }
         }
 
         else {
-
+            
             return { module: "Chassis", method: "move", data: "left" }
         }
     }
