@@ -1,24 +1,40 @@
 "use strict";
 var Canvas;
 (function (Canvas) {
-    window.addEventListener("load", hndDraw);
-    function hndDraw() {
-        let canvas = document.querySelector("canvas");
-        let crc2 = canvas.getContext("2d");
+    window.addEventListener("load", hndlLoad);
+    let canvas;
+    let crc2;
+    // Load
+    function hndlLoad() {
+        canvas = document.querySelector("canvas");
+        crc2 = canvas.getContext("2d");
+        canvas.width = 1640;
+        canvas.height = 900;
         crc2.fillStyle = "#5b39abff";
         crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
-        crc2.beginPath();
-        crc2.arc(100, 100, 20, 0, 1.5 * Math.PI);
+        drawTriangle();
+        console.log(canvas.width);
+        console.log(canvas.height);
+    }
+    // Draw
+    function drawTriangle() {
+        let pointA = { x: randomIntInRange(0, canvas.width), y: randomIntInRange(0, canvas.height) };
+        let pointB = { x: randomIntInRange(0, canvas.width), y: randomIntInRange(0, canvas.height) };
+        let pointC = { x: randomIntInRange(0, canvas.width), y: randomIntInRange(0, canvas.height) };
         let path = new Path2D();
-        path.arc(90, 70, 66, 0, 2 * Math.PI);
+        console.log(pointA);
+        path.moveTo(pointA.x, pointA.y);
+        path.lineTo(pointB.x, pointB.y);
+        path.lineTo(pointC.x, pointC.y);
+        path.lineTo(pointA.x, pointA.y);
+        path.closePath();
         crc2.stroke(path);
-        crc2.closePath();
-        crc2.stroke();
-        crc2.beginPath();
-        crc2.ellipse(100, 40, 34, 9, 1, 0, 2 * Math.PI, true);
-        crc2.moveTo(210, 10);
-        crc2.lineTo(20, 299);
-        crc2.closePath();
-        crc2.stroke();
+        crc2.fillStyle = "#bea341ff";
+        crc2.fill(path);
+    }
+    // Math
+    function randomIntInRange(_min, _max) {
+        return _min + Math.floor((_max - _min + 1) * Math.random());
     }
 })(Canvas || (Canvas = {}));
+//# sourceMappingURL=canvas.js.map
