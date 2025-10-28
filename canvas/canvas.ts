@@ -40,9 +40,6 @@ namespace Canvas {
 
   }
 
-
-
-
   // Math
   function randomIntInRange(_min: number, _max: number): number {
     return _min + Math.floor((_max - _min + 1) * Math.random());
