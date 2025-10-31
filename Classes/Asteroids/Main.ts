@@ -3,7 +3,10 @@ namespace Assteroids {
   window.addEventListener("load", hndlLoad);
 
   export let crc2: CanvasRenderingContext2D;
-  const asteroids: Asteroid[] = [];
+  export const linewidth: number = 2;
+  const moveables: Moveable[] = [];
+
+
 
   function hndlLoad(_event: Event): void {
     console.log("Asteroids starting");
@@ -13,6 +16,7 @@ namespace Assteroids {
     crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
     crc2.fillStyle = "#000000ff";
     crc2.strokeStyle = "#ffffffff";
+    crc2.lineWidth = linewidth;
     crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
 
     createPaths();
@@ -26,7 +30,7 @@ namespace Assteroids {
 
     // createShip();
 
-    // canvas.addEventListener("mousedown", loadLaser);
+    canvas.addEventListener("mousedown", shootProjectile);
     canvas.addEventListener("mouseup", shootLaser);
     // canvas.addEventListener("keypress", handleKeypress);
     // canvas.addEventListener("mousemove", setHeading);
@@ -36,10 +40,19 @@ namespace Assteroids {
   }
 
   // game Mechanics
+
+  function shootProjectile(_event: MouseEvent): void {
+    const origin: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop);
+    const velocity: Vector = new Vector(0, 0);
+    velocity.random(100, 100);
+    const projectile: Projectile = new Projectile(origin, velocity);
+    moveables.push(projectile);
+
+  }
   function shootLaser(_event: MouseEvent): void {
     console.log("Shoot Laser");
-    let hotspot: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop);
-    let asteroidHit: Asteroid | null = getAsteroidHit(hotspot);
+    const hotspot: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop);
+    const asteroidHit: Asteroid | null = getAsteroidHit(hotspot);
     if (asteroidHit)
       breakAsteroid(asteroidHit);
   }
@@ -47,19 +60,18 @@ namespace Assteroids {
   function breakAsteroid(_asteroid: Asteroid): void {
     if (_asteroid.size > 0.3) {
       for (let i: number = 0; i < 2; i++) {
-        let fragment: Asteroid = new Asteroid(_asteroid.size/ 2, _asteroid.position);
+        const fragment: Asteroid = new Asteroid(_asteroid.size / 2, _asteroid.position);
         fragment.velocity.add(_asteroid.velocity);
-        asteroids.push(fragment);
+        moveables.push(fragment);
       }
     }
-const index: number = asteroids.indexOf(_asteroid);
-asteroids.splice(index,1);
+    _asteroid.expendable = true;
   }
 
   function getAsteroidHit(_hotspot: Vector): Asteroid | null {
-    for (let asteroid of asteroids) {
-      if (asteroid.isHit(_hotspot))
-        return asteroid;
+    for (const moveable of moveables) {
+      if (moveable instanceof Asteroid && moveable.isHit(_hotspot))
+        return moveable;
     }
     return null;
   }
@@ -69,7 +81,7 @@ asteroids.splice(index,1);
     console.log("Create Asteroids");
     for (let i: number = 0; i < _nAsteroids; i++) {
       const asteroid: Asteroid = new Asteroid(1.0);
-      asteroids.push(asteroid);
+      moveables.push(asteroid);
 
     }
   }
@@ -78,13 +90,24 @@ asteroids.splice(index,1);
     console.log("Update");
     crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
 
-    for (const asteroid of asteroids) {
-      asteroid.move(1 / 50);
-      asteroid.draw();
+    for (const moveaable of moveables) {
+      moveaable.move(1 / 50);
+      moveaable.draw();
     }
+
+    deleteExpandables();
+
 
     // ship.draw
     // handleCollisions();
+  }
+
+  function deleteExpandables(): void {
+    for (let i: number = moveables.length-1; i >= 0; i--) {
+      if(moveables[i].expendable)
+        moveables.splice(i,1);
+    }
+
   }
 
 

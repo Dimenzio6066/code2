@@ -2,7 +2,8 @@
 var Assteroids;
 (function (Assteroids) {
     window.addEventListener("load", hndlLoad);
-    const asteroids = [];
+    Assteroids.linewidth = 2;
+    const moveables = [];
     function hndlLoad(_event) {
         console.log("Asteroids starting");
         const canvas = document.querySelector("canvas");
@@ -11,6 +12,7 @@ var Assteroids;
         Assteroids.crc2 = canvas.getContext("2d");
         Assteroids.crc2.fillStyle = "#000000ff";
         Assteroids.crc2.strokeStyle = "#ffffffff";
+        Assteroids.crc2.lineWidth = Assteroids.linewidth;
         Assteroids.crc2.fillRect(0, 0, Assteroids.crc2.canvas.width, Assteroids.crc2.canvas.height);
         Assteroids.createPaths();
         console.log("Asteroids paths: ", Assteroids.asteroidPaths);
@@ -20,35 +22,41 @@ var Assteroids;
         asteroid.move(1);
         createAsteroids(20);
         // createShip();
-        // canvas.addEventListener("mousedown", loadLaser);
+        canvas.addEventListener("mousedown", shootProjectile);
         canvas.addEventListener("mouseup", shootLaser);
         // canvas.addEventListener("keypress", handleKeypress);
         // canvas.addEventListener("mousemove", setHeading);
         window.setInterval(update, 20);
     }
     // game Mechanics
+    function shootProjectile(_event) {
+        const origin = new Assteroids.Vector(_event.clientX - Assteroids.crc2.canvas.offsetLeft, _event.clientY - Assteroids.crc2.canvas.offsetTop);
+        const velocity = new Assteroids.Vector(0, 0);
+        velocity.random(100, 100);
+        const projectile = new Assteroids.Projectile(origin, velocity);
+        moveables.push(projectile);
+    }
     function shootLaser(_event) {
         console.log("Shoot Laser");
-        let hotspot = new Assteroids.Vector(_event.clientX - Assteroids.crc2.canvas.offsetLeft, _event.clientY - Assteroids.crc2.canvas.offsetTop);
-        let asteroidHit = getAsteroidHit(hotspot);
+        const hotspot = new Assteroids.Vector(_event.clientX - Assteroids.crc2.canvas.offsetLeft, _event.clientY - Assteroids.crc2.canvas.offsetTop);
+        const asteroidHit = getAsteroidHit(hotspot);
         if (asteroidHit)
             breakAsteroid(asteroidHit);
     }
     function breakAsteroid(_asteroid) {
         if (_asteroid.size > 0.3) {
             for (let i = 0; i < 2; i++) {
-                let fragment = new Assteroids.Asteroid(_asteroid.size / 2, _asteroid.position);
+                const fragment = new Assteroids.Asteroid(_asteroid.size / 2, _asteroid.position);
                 fragment.velocity.add(_asteroid.velocity);
-                asteroids.push(fragment);
+                moveables.push(fragment);
             }
         }
-        const index = asteroids.indexOf(_asteroid);
-        asteroids.splice(index, 1);
+        _asteroid.expendable = true;
     }
     function getAsteroidHit(_hotspot) {
-        for (let asteroid of asteroids) {
-            if (asteroid.isHit(_hotspot))
-                return asteroid;
+        for (const moveable of moveables) {
+            if (moveable instanceof Assteroids.Asteroid && moveable.isHit(_hotspot))
+                return moveable;
         }
         return null;
     }
@@ -56,18 +64,25 @@ var Assteroids;
         console.log("Create Asteroids");
         for (let i = 0; i < _nAsteroids; i++) {
             const asteroid = new Assteroids.Asteroid(1.0);
-            asteroids.push(asteroid);
+            moveables.push(asteroid);
         }
     }
     function update() {
         console.log("Update");
         Assteroids.crc2.fillRect(0, 0, Assteroids.crc2.canvas.width, Assteroids.crc2.canvas.height);
-        for (const asteroid of asteroids) {
-            asteroid.move(1 / 50);
-            asteroid.draw();
+        for (const moveaable of moveables) {
+            moveaable.move(1 / 50);
+            moveaable.draw();
         }
+        deleteExpandables();
         // ship.draw
         // handleCollisions();
+    }
+    function deleteExpandables() {
+        for (let i = moveables.length - 1; i >= 0; i--) {
+            if (moveables[i].expendable)
+                moveables.splice(i, 1);
+        }
     }
     // Math
     function randomIntInRange(_min, _max) {
