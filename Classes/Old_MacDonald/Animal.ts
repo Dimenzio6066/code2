@@ -1,22 +1,20 @@
-namespace Farm {
+namespace Farm{
+    export class Animal {
+        public species: string;
+        public name: string;
+        public sound: string;
+        public food: Food;
+        public consumption: number;
 
-export class Animal {
-
-public name: string;
-public song: string;
-
-
-    public constructor(_name:string, _song: , _food:Food, ) {
-
-this.name = _name;
-this
-    
+        public constructor(_species: string,_name:string, _sound: string,_food: Food,_consumtion:number) {
+            this.species = _species;
+            this.name=_name;
+            this.sound = _sound;
+            this.food=_food;
+            this.consumption=_consumtion;
+        }
+        public subtraction(_subtracted: Animal): void {
+            this.consumption -=_subtracted.consumption;
+        }
     }
-
-
-}
-
-
-
-
 }

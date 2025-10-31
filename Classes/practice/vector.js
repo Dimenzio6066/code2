@@ -1,6 +1,6 @@
 "use strict";
-var Vector;
-(function (Vector_1) {
+var Practice;
+(function (Practice) {
     class Vector {
         x;
         y;
@@ -23,5 +23,5 @@ var Vector;
     const v1 = new Vector(2, 2);
     v1.scale(2);
     console.log(v1);
-})(Vector || (Vector = {}));
+})(Practice || (Practice = {}));
 //# sourceMappingURL=vector.js.map
