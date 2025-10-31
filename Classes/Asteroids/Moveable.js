@@ -4,6 +4,7 @@ var Assteroids;
     class Moveable {
         position = new Assteroids.Vector(0, 0);
         velocity = new Assteroids.Vector(0, 0);
+        expendable = false;
         constructor(_position) {
             if (_position)
                 this.position = _position.copy();

@@ -12,21 +12,21 @@ var Assteroids;
         Assteroids.crc2 = canvas.getContext("2d");
         Assteroids.crc2.fillStyle = "#000000ff";
         Assteroids.crc2.strokeStyle = "#ffffffff";
-        Assteroids.crc2.lineWidth = Assteroids.linewidth;
         Assteroids.crc2.fillRect(0, 0, Assteroids.crc2.canvas.width, Assteroids.crc2.canvas.height);
+        Assteroids.crc2.lineWidth = Assteroids.linewidth;
         Assteroids.createPaths();
         console.log("Asteroids paths: ", Assteroids.asteroidPaths);
         const asteroid = new Assteroids.Asteroid(1);
         console.log(asteroid);
-        asteroid.draw();
-        asteroid.move(1);
-        createAsteroids(20);
+        // asteroid.draw();
+        // asteroid.move(1);
+        createAsteroids(10);
         // createShip();
         canvas.addEventListener("mousedown", shootProjectile);
         canvas.addEventListener("mouseup", shootLaser);
         // canvas.addEventListener("keypress", handleKeypress);
         // canvas.addEventListener("mousemove", setHeading);
-        window.setInterval(update, 20);
+        window.setInterval(update, 10);
     }
     // game Mechanics
     function shootProjectile(_event) {
@@ -70,9 +70,9 @@ var Assteroids;
     function update() {
         console.log("Update");
         Assteroids.crc2.fillRect(0, 0, Assteroids.crc2.canvas.width, Assteroids.crc2.canvas.height);
-        for (const moveaable of moveables) {
-            moveaable.move(1 / 50);
-            moveaable.draw();
+        for (const moveable of moveables) {
+            moveable.move(1 / 50);
+            moveable.draw();
         }
         deleteExpandables();
         // ship.draw

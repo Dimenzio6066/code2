@@ -1,7 +1,7 @@
 namespace Assteroids {
 
     export class Projectile extends Moveable {
-        public lifetime: number = 10;
+        public lifetime: number = 6;
 
         public constructor(_position: Vector, _velocity: Vector) {
             super(_position);

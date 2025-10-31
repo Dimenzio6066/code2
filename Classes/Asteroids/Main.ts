@@ -16,16 +16,16 @@ namespace Assteroids {
     crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
     crc2.fillStyle = "#000000ff";
     crc2.strokeStyle = "#ffffffff";
-    crc2.lineWidth = linewidth;
     crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
+    crc2.lineWidth = linewidth;
 
     createPaths();
     console.log("Asteroids paths: ", asteroidPaths);
 
     const asteroid: Asteroid = new Asteroid(1);
     console.log(asteroid);
-    asteroid.draw();
-    asteroid.move(1);
+    // asteroid.draw();
+    // asteroid.move(1);
     createAsteroids(20);
 
     // createShip();
@@ -36,7 +36,7 @@ namespace Assteroids {
     // canvas.addEventListener("mousemove", setHeading);
 
 
-    window.setInterval(update, 20);
+    window.setInterval(update, 10);
   }
 
   // game Mechanics
@@ -49,6 +49,7 @@ namespace Assteroids {
     moveables.push(projectile);
 
   }
+
   function shootLaser(_event: MouseEvent): void {
     console.log("Shoot Laser");
     const hotspot: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop);
@@ -87,12 +88,12 @@ namespace Assteroids {
   }
 
   function update(): void {
-    console.log("Update");
+    // console.log("Update");
     crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
 
-    for (const moveaable of moveables) {
-      moveaable.move(1 / 50);
-      moveaable.draw();
+    for (const moveable of moveables) {
+      moveable.move(1 / 50);
+      moveable.draw();
     }
 
     deleteExpandables();
@@ -103,9 +104,9 @@ namespace Assteroids {
   }
 
   function deleteExpandables(): void {
-    for (let i: number = moveables.length-1; i >= 0; i--) {
-      if(moveables[i].expendable)
-        moveables.splice(i,1);
+    for (let i: number = moveables.length - 1; i >= 0; i--) {
+      if (moveables[i].expendable)
+        moveables.splice(i, 1);
     }
 
   }

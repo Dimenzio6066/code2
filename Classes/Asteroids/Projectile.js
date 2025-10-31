@@ -2,7 +2,7 @@
 var Assteroids;
 (function (Assteroids) {
     class Projectile extends Assteroids.Moveable {
-        lifetime = 10;
+        lifetime = 6;
         constructor(_position, _velocity) {
             super(_position);
             this.velocity = _velocity.copy();
