@@ -26,7 +26,7 @@ var Assteroids;
                 this.position.y -= Assteroids.crc2.canvas.height;
         }
         draw() {
-            //console.log("Moveable move");
+            //console.log("Moveable draw");
         }
     }
     Assteroids.Moveable = Moveable;

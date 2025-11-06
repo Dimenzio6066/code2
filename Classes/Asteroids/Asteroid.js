@@ -23,7 +23,7 @@ var Assteroids;
             Assteroids.crc2.translate(this.position.x, this.position.y);
             Assteroids.crc2.scale(this.size, this.size);
             Assteroids.crc2.translate(-50, -50);
-            Assteroids.crc2.lineWidth = 1 / this.size;
+            Assteroids.crc2.lineWidth = Assteroids.linewidth / this.size;
             Assteroids.crc2.stroke(Assteroids.asteroidPaths[this.type]);
             Assteroids.crc2.restore();
         }

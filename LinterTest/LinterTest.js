@@ -1,17 +1,18 @@
 "use strict";
-var linterTest;
-(function (linterTest) {
+var LinterTest;
+(function (LinterTest) {
     let KEY;
     (function (KEY) {
-        KEY[KEY["Pos"] = 1] = "Pos";
-        KEY[KEY["neg"] = -1] = "neg";
+        KEY[KEY["POS"] = 1] = "POS";
+        KEY[KEY["NEG"] = -1] = "NEG";
     })(KEY || (KEY = {}));
-    const info = { text: "G`udetmvhsgBncd1 ", key: KEY.Pos };
+    const info = { text: "G`udetmvhsgBncd1 ", key: KEY.POS };
     console.log(deCrypt(info.text, info.key));
-    function deCrypt(text, _key) {
+    function deCrypt(_text, _key) {
         let result = "";
-        for (let i = 0; i < text.length; i++)
-            result += String.fromCharCode(text.charCodeAt(i) + _key);
+        for (let i = 0; i < _text.length; i++)
+            result += String.fromCharCode(_text.charCodeAt(i) + _key);
         return result;
     }
-})(linterTest || (linterTest = {}));
+})(LinterTest || (LinterTest = {}));
+//# sourceMappingURL=LinterTest.js.map

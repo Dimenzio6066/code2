@@ -36,7 +36,7 @@ namespace Assteroids {
 
 
         public draw(): void {
-            //console.log("Moveable move");
+            //console.log("Moveable draw");
         }
     }
 }

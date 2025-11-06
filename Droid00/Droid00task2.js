@@ -13,3 +13,4 @@ export var Droid;
     }
     Droid.getCommand = getCommand;
 })(Droid || (Droid = {}));
+//# sourceMappingURL=Droid00task2.js.map

@@ -20,7 +20,7 @@ var Assteroids;
         console.log(asteroid);
         // asteroid.draw();
         // asteroid.move(1);
-        createAsteroids(10);
+        createAsteroids(20);
         // createShip();
         canvas.addEventListener("mousedown", shootProjectile);
         canvas.addEventListener("mouseup", shootLaser);
@@ -68,7 +68,7 @@ var Assteroids;
         }
     }
     function update() {
-        console.log("Update");
+        // console.log("Update");
         Assteroids.crc2.fillRect(0, 0, Assteroids.crc2.canvas.width, Assteroids.crc2.canvas.height);
         for (const moveable of moveables) {
             moveable.move(1 / 50);
