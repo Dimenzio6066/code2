@@ -16,7 +16,7 @@ namespace FirstFudge {
       const angle: number = rotSpeed * ƒ.Loop.timeFrameGame / 1000;
 
       this.getComponent(ƒ.ComponentTransform).mtxLocal.rotateY(angle, true);
-      this.getComponent(ƒ.ComponentMesh).mtxPivo.rotateY(3 * angle);
+      this.getComponent(ƒ.ComponentMesh).mtxPivot.rotateY(3 * angle);
     }
   }
 }
