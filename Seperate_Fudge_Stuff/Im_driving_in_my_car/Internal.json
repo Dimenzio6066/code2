@@ -72,6 +72,29 @@
               "idMaterial": "Material|2025-11-10T09:05:46.803Z|61641"
             }
           }
+        ],
+        "ComponentTransform": [
+          {
+            "ƒ.ComponentTransform": {
+              "local": {
+                "translation": "[0, 0, 0]",
+                "rotation": "[0, 0, 0]",
+                "scaling": "[1, 1, 1]"
+              },
+              "Component": {
+                "active": true
+              }
+            }
+          }
+        ],
+        "CubaControl": [
+          {
+            "Script.CubaControl": {
+              "active": true,
+              "message": "Hallo",
+              "rotationSpeed": 0.1
+            }
+          }
         ]
       },
       "children": [

@@ -41,7 +41,7 @@ namespace Script {
     }
 
     public update = (_event: Event): void => {
-      console.log(this.message);9
+      console.log(this.message);
       this.spin();
     }
 

@@ -2,12 +2,12 @@ namespace Script {
   import ƒ = FudgeCore;
   ƒ.Project.registerScriptNamespace(Script);  // Register the namespace to FUDGE for serialization
 
-  export class CustomComponentScript extends ƒ.ComponentScript {
+  export class CubaControl extends ƒ.ComponentScript {
     // Register the script as component for use in the editor via drag&drop
-    public static readonly iSubclass: number = ƒ.Component.registerSubclass(CustomComponentScript);
+    public static readonly iSubclass: number = ƒ.Component.registerSubclass(CubaControl);
     // Properties may be mutated by users in the editor via the automatically created user interface
-    public message: string = "CustomComponentScript added to ";
-
+    public message: string = "This is a message";
+    public rotationSpeed: number = 0.01;
 
     constructor() {
       super();
@@ -34,9 +34,20 @@ namespace Script {
           break;
         case ƒ.EVENT.NODE_DESERIALIZED:
           // if deserialized the node is now fully reconstructed and access to all its components and children is possible
+          ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
           break;
       }
     }
+
+    public update = (_event: Event): void => {
+      console.log(this.message);
+
+    }
+
+    public rotate = (_angle: number): void => {
+      this.node.mtxLocal.rotateY(_angle);
+    }
+
 
     // protected reduceMutator(_mutator: ƒ.Mutator): void {
     //   // delete properties that should not be mutated
