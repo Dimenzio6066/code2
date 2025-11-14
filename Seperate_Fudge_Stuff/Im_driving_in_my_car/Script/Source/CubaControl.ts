@@ -7,7 +7,7 @@ namespace Script {
     public static readonly iSubclass: number = ƒ.Component.registerSubclass(CubaControl);
     // Properties may be mutated by users in the editor via the automatically created user interface
     public message: string = "This is a message";
-    public rotationSpeed: number = 0.01;
+    
 
     constructor() {
       super();
@@ -47,6 +47,10 @@ namespace Script {
     public rotate = (_angle: number): void => {
       this.node.mtxLocal.rotateY(_angle);
     }
+
+    public drive = (_forward:number): void => {
+      this.node.mtxLocal.translateZ(_forward);
+    } 
 
 
     // protected reduceMutator(_mutator: ƒ.Mutator): void {

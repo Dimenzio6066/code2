@@ -10,7 +10,6 @@ var Script;
             super();
             // Properties may be mutated by users in the editor via the automatically created user interface
             this.message = "This is a message";
-            this.rotationSpeed = 0.01;
             // Activate the functions of this component as response to events
             this.hndEvent = (_event) => {
                 switch (_event.type) {
@@ -33,6 +32,9 @@ var Script;
             this.rotate = (_angle) => {
                 this.node.mtxLocal.rotateY(_angle);
             };
+            this.drive = (_forward) => {
+                this.node.mtxLocal.translateZ(_forward);
+            };
             // Don't start when running in editor
             if (ƒ.Project.mode == ƒ.MODE.EDITOR)
                 return;
@@ -50,11 +52,21 @@ var Script;
     ƒ.Debug.info("Main Program Template running!");
     let viewport;
     let cuba;
+    let cubaAmount = 10;
+    const control = new ƒ.Control("Cuba", 0.5, 0 /* ƒ.CONTROL_TYPE.PROPORTIONAL */, 500);
     document.addEventListener("interactiveViewportStarted", start);
-    function start(_event) {
+    async function start(_event) {
         viewport = _event.detail;
         const cubaNode = viewport.getBranch().getChildByName("Cuba");
         cuba = cubaNode.getComponent(Script.CubaControl);
+        const cubaGraph = ƒ.Project.getResourcesByName("Cuba")[0];
+        for (let i = 0; i < cubaAmount; i++) {
+            const cubaInstance = await ƒ.Project.createGraphInstance(cubaGraph);
+            console.log(cubaInstance);
+            const position = ƒ.random.getVector3(new ƒ.Vector3(30, 0, 30), new ƒ.Vector3(-30, 0, -30));
+            cubaInstance.mtxLocal.translate(position);
+            cubaNode.getParent().addChild(cubaInstance);
+        }
         document.addEventListener("mousemove", hndMouseMove);
         ƒ.Loop.addEventListener("loopFrame" /* ƒ.EVENT.LOOP_FRAME */, update);
         ƒ.Loop.start(); // start the game loop to continously draw the viewport, update the audiosystem and drive the physics i/a
